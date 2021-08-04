@@ -3,7 +3,7 @@
 使用 Paddle 框架复现
 
 ## 测试视频
-![](https://bj.bcebos.com/v1/ai-studio-online/d24f573eb9b54717ad8cde082eda5f5d92e8c6ddf057491f8d7790e90a80db44?responseContentDisposition=attachment%3B%20filename%3Dezgif.com-gif-maker.gif)
+![](https://img-blog.csdnimg.cn/f11007092340466e8a64155ce0283141.gif)
 
 ## 快速使用
 ### 模型测试
