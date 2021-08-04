@@ -1,6 +1,6 @@
 # car-behavioral-cloning-paddle
 ## 简介
-使用 Paddle 框架复现
+使用 Paddle 框架复现论文 End to End Learning for Self-Driving Cars
 
 ## 测试视频
 ![](https://img-blog.csdnimg.cn/f11007092340466e8a64155ce0283141.gif)
