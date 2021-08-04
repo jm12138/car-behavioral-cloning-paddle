@@ -5,6 +5,10 @@
 ## 测试视频
 ![](https://img-blog.csdnimg.cn/f11007092340466e8a64155ce0283141.gif)
 
+## 预训练模型
+* model_convert_from_keras.pdparams -> 官方项目中的预训练模型，模型输出与 Keras 实现对齐，可用于模拟器中第二个赛道的自动驾驶
+* model_paddle_test1.pdparams / model_paddle_test2.pdparams -> 使用本项目训练的模型，可用于模拟器中第一个赛道的自动驾驶
+
 ## 快速使用
 ### 模型测试
 * 启动模拟器并启动自动驾驶模式
