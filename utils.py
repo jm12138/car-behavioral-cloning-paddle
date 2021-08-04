@@ -19,7 +19,7 @@ def crop(image):
     """
     Crop the image (removing the sky at the top and the car front at the bottom)
     """
-    return image[60:-25, :, :] # remove the sky and the car front
+    return image[60:-25, :, :]  # remove the sky and the car front
 
 
 def resize(image):
@@ -93,7 +93,7 @@ def random_shadow(image):
     xm, ym = np.mgrid[0:IMAGE_HEIGHT, 0:IMAGE_WIDTH]
 
     # mathematically speaking, we want to set 1 below the line and zero otherwise
-    # Our coordinate is up side down.  So, the above the line: 
+    # Our coordinate is up side down.  So, the above the line:
     # (ym-y1)/(xm-x1) > (y2-y1)/(x2-x1)
     # as x2 == x1 causes zero-division problem, we'll write it in the below form:
     # (ym-y1)*(x2-x1) - (y2-y1)*(xm-x1) > 0
@@ -117,47 +117,29 @@ def random_brightness(image):
     # HSV (Hue, Saturation, Value) is also called HSB ('B' for Brightness).
     hsv = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
     ratio = 1.0 + 0.4 * (np.random.rand() - 0.5)
-    hsv[:,:,2] =  hsv[:,:,2] * ratio
+    hsv[:, :, 2] = hsv[:, :, 2] * ratio
     return cv2.cvtColor(hsv, cv2.COLOR_HSV2RGB)
 
 
-def augument(data_dir, center, left, right, steering_angle, range_x=100, range_y=10):
+def augument(data_dir,
+             center,
+             left,
+             right,
+             steering_angle,
+             range_x=100,
+             range_y=10):
     """
     Generate an augumented image and adjust steering angle.
     (The steering angle is associated with the center image)
     """
-    image, steering_angle = choose_image(data_dir, center, left, right, steering_angle)
+    image, steering_angle = choose_image(data_dir, center, left, right,
+                                         steering_angle)
     image, steering_angle = random_flip(image, steering_angle)
-    image, steering_angle = random_translate(image, steering_angle, range_x, range_y)
+    image, steering_angle = random_translate(image, steering_angle, range_x,
+                                             range_y)
     # image = random_shadow(image)
     image = random_brightness(image)
     return image, steering_angle
-
-
-def batch_generator(data_dir, image_paths, steering_angles, batch_size, is_training):
-    """
-    Generate training image give image paths and associated steering angles
-    """
-    images = np.empty([batch_size, IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS])
-    steers = np.empty(batch_size)
-    while True:
-        i = 0
-        for index in np.random.permutation(image_paths.shape[0]):
-            center, left, right = image_paths[index]
-            steering_angle = steering_angles[index]
-            # argumentation
-            if is_training and np.random.rand() < 0.6:
-                image, steering_angle = augument(data_dir, center, left, right, steering_angle)
-            else:
-                image = load_image(data_dir, center) 
-            # add the image and steering angle to the batch
-            images[i] = preprocess(image)
-            steers[i] = steering_angle
-            i += 1
-            if i == batch_size:
-                break
-        yield images, steers
-
 
 
 class dataset(Dataset):
@@ -172,10 +154,12 @@ class dataset(Dataset):
         steering_angle = self.steering_angles[idx]
         # argumentation
         if self.is_training and np.random.rand() < 0.6:
-            image, steering_angle = augument(self.data_dir, center, left, right, steering_angle)
+            image, steering_angle = augument(self.data_dir, center, left,
+                                             right, steering_angle)
         else:
-            image = load_image(self.data_dir, center) 
-        return (preprocess(image) / 127.5 - 1.0).astype('float32'), np.array(steering_angle).astype('float32').reshape(-1)
+            image = load_image(self.data_dir, center)
+        return (preprocess(image) / 127.5 - 1.0).astype('float32'), np.array(
+            steering_angle).astype('float32').reshape(-1)
 
     def __len__(self):
         return len(self.image_paths)

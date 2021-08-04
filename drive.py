@@ -1,21 +1,19 @@
-import argparse
+import os
+import utils
 import base64
 import paddle
-from datetime import datetime
-import os
 import shutil
-
-import numpy as np
+import argparse
 import socketio
 import eventlet
+import numpy as np
 import eventlet.wsgi
+
 from PIL import Image
-from flask import Flask
 from io import BytesIO
-
+from flask import Flask
+from datetime import datetime
 from model import build_model
-
-import utils
 
 sio = socketio.Server()
 app = Flask(__name__)
@@ -26,6 +24,7 @@ MAX_SPEED = 25
 MIN_SPEED = 10
 
 speed_limit = MAX_SPEED
+
 
 @sio.on('telemetry')
 def telemetry(sid, data):
@@ -43,14 +42,15 @@ def telemetry(sid, data):
             timestamp = datetime.utcnow().strftime('%Y_%m_%d_%H_%M_%S_%f')[:-3]
             image_filename = os.path.join(args.image_folder, timestamp)
             image.save('{}.jpg'.format(image_filename))
-            
+
         try:
-            image = np.asarray(image)       # from PIL image to numpy array
-            image = utils.preprocess(image) # apply the preprocessing
-            image = np.array([image])       # the model expects 4D array
+            image = np.asarray(image)  # from PIL image to numpy array
+            image = utils.preprocess(image)  # apply the preprocessing
+            image = np.array([image])  # the model expects 4D array
 
             # predict the steering angle for the image
-            steering_angle = model(image.astype('float32') / 127.5 - 1.0).item()
+            steering_angle = model(image.astype('float32') / 127.5 -
+                                   1.0).item()
             # lower the throttle as the speed increases
             # if the speed is above the current speed limit, we are on a downhill.
             # make sure we slow down first and then go back to the original max speed.
@@ -59,13 +59,13 @@ def telemetry(sid, data):
                 speed_limit = MIN_SPEED  # slow down
             else:
                 speed_limit = MAX_SPEED
-            throttle = 1.0 - steering_angle**2 - (speed/speed_limit)**2
+            throttle = 1.0 - steering_angle**2 - (speed / speed_limit)**2
 
             print('{} {} {}'.format(steering_angle, throttle, speed))
             send_control(steering_angle, throttle)
         except Exception as e:
             print(e)
-        
+
     else:
         # NOTE: DON'T EDIT THIS.
         sio.emit('manual', data={}, skip_sid=True)
@@ -78,13 +78,12 @@ def connect(sid, environ):
 
 
 def send_control(steering_angle, throttle):
-    sio.emit(
-        "steer",
-        data={
-            'steering_angle': steering_angle.__str__(),
-            'throttle': throttle.__str__()
-        },
-        skip_sid=True)
+    sio.emit("steer",
+             data={
+                 'steering_angle': steering_angle.__str__(),
+                 'throttle': throttle.__str__()
+             },
+             skip_sid=True)
 
 
 if __name__ == '__main__':
@@ -92,14 +91,14 @@ if __name__ == '__main__':
     parser.add_argument(
         'model',
         type=str,
-        help='Path to model h5 file. Model should be on the same path.'
-    )
+        help='Path to model h5 file. Model should be on the same path.')
     parser.add_argument(
         'image_folder',
         type=str,
         nargs='?',
         default='',
-        help='Path to image folder. This is where the images from the run will be saved.'
+        help=
+        'Path to image folder. This is where the images from the run will be saved.'
     )
     args = parser.parse_args()
 
