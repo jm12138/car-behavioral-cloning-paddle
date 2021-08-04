@@ -71,11 +71,15 @@ def train_model(model, args, X_train, X_valid, y_train, y_valid):
 
     earlystopping = EarlyStopping(monitor='loss',
                                   mode='min',
-                                  patience=5,
+                                  patience=10,
                                   verbose=1,
                                   min_delta=0,
                                   baseline=None,
                                   save_best_model=True)
+    if args.early_stop:
+        cbs = [checkpoint, earlystopping]
+    else:
+        cbs = [checkpoint]
 
     opt = Adam(learning_rate=args.learning_rate, parameters=model.parameters())
 
@@ -90,7 +94,7 @@ def train_model(model, args, X_train, X_valid, y_train, y_valid):
               epochs=args.nb_epoch,
               batch_size=args.batch_size,
               save_dir=args.save_dir,
-              callbacks=[checkpoint, earlystopping],
+              callbacks=cbs,
               verbose=1)
 
 
@@ -143,6 +147,11 @@ def main():
                         dest='learning_rate',
                         type=float,
                         default=1.0e-4)
+    parser.add_argument('-e',
+                        help='early stop',
+                        dest='early_stop',
+                        type=bool,
+                        default=False)
     args = parser.parse_args()
 
     print('-' * 30)
