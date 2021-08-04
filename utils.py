@@ -1,5 +1,4 @@
 import cv2, os
-import paddle
 import numpy as np
 import matplotlib.image as mpimg
 from paddle.io import Dataset
