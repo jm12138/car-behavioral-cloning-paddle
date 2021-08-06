@@ -9,13 +9,13 @@
   ![](https://img-blog.csdnimg.cn/f11007092340466e8a64155ce0283141.gif)
 
 ## AIStudio
-* [论文复现：实现简单的端到端自动驾驶模型](https://aistudio.baidu.com/aistudio/projectdetail/2253679)（包含模型训练、训练日志、训练 Checkpoints 等）
+* [论文复现：实现简单的端到端自动驾驶模型](https://aistudio.baidu.com/aistudio/projectdetail/2253679)（包含**模型训练**、**训练日志**、**训练 Checkpoints** 等）
 
 
 ## 模型
-* model_convert_from_keras.pdparams -> 官方项目中的预训练模型，模型输出与 Keras 实现对齐，可用于模拟器中第二个赛道的自动驾驶
-* model_paddle_test1.pdparams / model_paddle_test2.pdparams -> 使用本项目训练的模型，可用于模拟器中第一个赛道的自动驾驶
-* 更多模型训练的信息请查看 AIStudio 项目（上述两个模型文件和 AIStudio 里面的模型文件均为使用本项目训练）
+* model_convert_from_keras.pdparams -> 官方项目中的预训练模型，模型输出与 Keras 实现对齐，可用于模拟器中**第二个赛道**的自动驾驶
+* model_paddle_test1.pdparams / model_paddle_test2.pdparams -> **使用本项目**训练的模型，可用于模拟器中**第一个赛道**的自动驾驶
+* 更多模型训练的信息请查看 AIStudio 项目（上述两个模型文件和 AIStudio 里面的模型文件均为使用**本项目**训练）
 
 ## 模拟器下载
 * [linux](https://d17h27t6h515a5.cloudfront.net/topher/2016/November/5831f0f7_simulator-linux/simulator-linux.zip)
