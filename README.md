@@ -1,8 +1,9 @@
 # car-behavioral-cloning-paddle
 ## 一、简介
-* 使用 Paddle 框架复现论文 End to End Learning for Self-Driving Cars
-* 复现指标： 能在模拟器上运行不偏离路面
-* AIStudio：项目：[论文复现：实现简单的端到端自动驾驶模型](https://aistudio.baidu.com/aistudio/projectdetail/2253679)（包含模型训练、训练日志、训练 Checkpoints 等）
+* 本项目基于 Paddle 框架复现论文 End to End Learning for Self-Driving Cars
+* 论文：[End to End Learning for Self-Driving Cars](https://arxiv.org/abs/1604.07316)
+* 参考实现：[naokishibuya/car-behavioral-cloning](https://github.com/naokishibuya/car-behavioral-cloning)
+* AIStudio：项目：[论文复现：实现简单的端到端自动驾驶模型](https://aistudio.baidu.com/aistudio/projectdetail/2253679)
 
 ## 二、Demo 演示
 * 模拟器自动驾驶测试：
