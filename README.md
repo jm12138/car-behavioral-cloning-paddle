@@ -9,7 +9,7 @@
 
   ![](https://img-blog.csdnimg.cn/f11007092340466e8a64155ce0283141.gif)
 
-# 三、快速使用
+## 三、快速使用
 * 模拟器下载
   * [linux](https://d17h27t6h515a5.cloudfront.net/topher/2016/November/5831f0f7_simulator-linux/simulator-linux.zip)
   * [max](https://d17h27t6h515a5.cloudfront.net/topher/2016/November/5831f290_simulator-macos/simulator-macos.zip)
