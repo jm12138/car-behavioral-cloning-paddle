@@ -1,66 +1,15 @@
-import os
 import paddle
 import argparse
 import numpy as np
-import pandas as pd
 import paddle.nn as nn
 
-from utils import INPUT_SHAPE, dataset
-from sklearn.model_selection import train_test_split
 from paddle.optimizer import Adam
 from paddle.callbacks import ModelCheckpoint, EarlyStopping
 
+from car.model import build_model
+from car.utils import CarDataset, load_data
+
 np.random.seed(0)
-
-
-def load_data(args):
-    """
-    Load training data and split it into training and validation set
-    """
-    data_df = pd.read_csv(os.path.join(args.data_dir, 'driving_log.csv'))
-
-    X = data_df[['center', 'left', 'right']].values
-    y = data_df['steering'].values
-
-    X_train, X_valid, y_train, y_valid = train_test_split(
-        X, y, test_size=args.test_size, random_state=0)
-
-    return X_train, X_valid, y_train, y_valid
-
-
-def build_model(keep_prob=0.5):
-    model = nn.Sequential(
-        nn.Conv2D(in_channels=3,
-                  out_channels=24,
-                  kernel_size=5,
-                  stride=2,
-                  padding='valid',
-                  data_format='NHWC'), nn.ELU(),
-        nn.Conv2D(in_channels=24,
-                  out_channels=36,
-                  kernel_size=5,
-                  stride=2,
-                  padding='valid',
-                  data_format='NHWC'), nn.ELU(),
-        nn.Conv2D(in_channels=36,
-                  out_channels=48,
-                  kernel_size=5,
-                  stride=2,
-                  padding='valid',
-                  data_format='NHWC'), nn.ELU(),
-        nn.Conv2D(in_channels=48,
-                  out_channels=64,
-                  kernel_size=(3, 3),
-                  padding='valid',
-                  data_format='NHWC'), nn.ELU(),
-        nn.Conv2D(in_channels=64,
-                  out_channels=64,
-                  kernel_size=(3, 3),
-                  padding='valid',
-                  data_format='NHWC'), nn.ELU(), nn.Dropout(keep_prob),
-        nn.Flatten(), nn.Linear(1152, 100), nn.ELU(), nn.Linear(100, 50),
-        nn.ELU(), nn.Linear(50, 10), nn.ELU(), nn.Linear(10, 1))
-    return model
 
 
 def train_model(model, args, X_train, X_valid, y_train, y_valid):
@@ -86,8 +35,8 @@ def train_model(model, args, X_train, X_valid, y_train, y_valid):
     model = paddle.Model(model)
     model.prepare(loss=nn.MSELoss(), optimizer=opt)
 
-    train_dataset = dataset(args.data_dir, X_train, y_train, True)
-    val_dataset = dataset(args.data_dir, X_valid, y_valid, False)
+    train_dataset = CarDataset(args.data_dir, X_train, y_train, True)
+    val_dataset = CarDataset(args.data_dir, X_valid, y_valid, False)
 
     model.fit(train_data=train_dataset,
               eval_data=val_dataset,

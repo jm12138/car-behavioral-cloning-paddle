@@ -1,7 +1,12 @@
-import cv2, os
+import os
+import cv2
+import pandas as pd
 import numpy as np
 import matplotlib.image as mpimg
+
 from paddle.io import Dataset
+from sklearn.model_selection import train_test_split
+
 
 IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS = 66, 200, 3
 INPUT_SHAPE = (IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS)
@@ -141,7 +146,7 @@ def augument(data_dir,
     return image, steering_angle
 
 
-class dataset(Dataset):
+class CarDataset(Dataset):
     def __init__(self, data_dir, image_paths, steering_angles, is_training):
         self.data_dir = data_dir
         self.image_paths = image_paths
@@ -162,3 +167,18 @@ class dataset(Dataset):
 
     def __len__(self):
         return len(self.image_paths)
+
+
+def load_data(args):
+    """
+    Load training data and split it into training and validation set
+    """
+    data_df = pd.read_csv(os.path.join(args.data_dir, 'driving_log.csv'))
+
+    X = data_df[['center', 'left', 'right']].values
+    y = data_df['steering'].values
+
+    X_train, X_valid, y_train, y_valid = train_test_split(
+        X, y, test_size=args.test_size, random_state=0)
+
+    return X_train, X_valid, y_train, y_valid

@@ -13,7 +13,7 @@ from PIL import Image
 from io import BytesIO
 from flask import Flask
 from datetime import datetime
-from model import build_model
+from car.model import build_model
 
 sio = socketio.Server()
 app = Flask(__name__)
