@@ -11,7 +11,64 @@
 
   ![](https://img-blog.csdnimg.cn/f11007092340466e8a64155ce0283141.gif)
 
-## 三、快速使用
+## 三、数据集
+* 本项目数据集需要通过模拟器进行手动采集
+* 采集完成的数据列表 csv 文件还需要添加如下表头信息并且确保其中的图片路径与其真实路径保持一致
+
+    | center | left | right | steering | lefting | righting | speed |
+    | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+
+## 四、依赖环境
+* 本项目依赖如下几个模块：
+
+  ```python
+  astor==0.8.1
+  bidict==0.21.2
+  certifi==2021.5.30
+  charset-normalizer==2.0.4
+  click==8.0.1
+  colorama==0.4.4
+  cycler==0.10.0
+  decorator==5.0.9
+  dnspython==1.16.0
+  eventlet==0.31.1
+  Flask==2.0.1
+  gast==0.3.3
+  greenlet==1.1.0
+  idna==3.2
+  itsdangerous==2.0.1
+  Jinja2==3.0.1
+  joblib==1.0.1
+  kiwisolver==1.3.1
+  MarkupSafe==2.0.1
+  matplotlib==3.4.2
+  numpy==1.19.3
+  opencv-python==4.5.3.56
+  paddlepaddle==2.1.2
+  pandas==1.3.1
+  Pillow==8.3.1
+  protobuf==3.17.3
+  pyparsing==2.4.7
+  python-dateutil==2.8.2
+  python-engineio==3.13.0
+  python-socketio==4.6.1
+  pytz==2021.1
+  requests==2.26.0
+  scikit-learn==0.24.2
+  scipy==1.7.1
+  six==1.16.0
+  threadpoolctl==2.2.0
+  urllib3==1.26.6
+  Werkzeug==2.0.1
+  ```
+
+* 可通过如下命令一键安装依赖：
+
+  ```bash
+  $ pip install -r requirements.txt
+  ```
+
+## 五、快速使用
 * 模拟器下载
   * [linux](https://d17h27t6h515a5.cloudfront.net/topher/2016/November/5831f0f7_simulator-linux/simulator-linux.zip)
   * [max](https://d17h27t6h515a5.cloudfront.net/topher/2016/November/5831f290_simulator-macos/simulator-macos.zip)
