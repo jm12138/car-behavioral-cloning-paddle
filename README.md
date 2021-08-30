@@ -21,7 +21,7 @@
   * 使用命令行启动模型训练
 
     ```shell
-    $ python model.py -d [path to the data directory]
+    $ python train.py -d [path to the data directory]
     ```
 
 * 模型测试
