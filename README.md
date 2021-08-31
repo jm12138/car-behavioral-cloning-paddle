@@ -128,3 +128,7 @@
   |框架版本|Paddle 2.1.2|
   |应用场景|自动驾驶|
   |支持硬件|CPU / GPU|
+ 
+* 具体的网络结构如下图所示：
+
+  ![](https://ai-studio-static-online.cdn.bcebos.com/227e1a2847af4658a8ae5d9172d30b715cd424fd4a7a490cbbaad525c8adb8d6)
