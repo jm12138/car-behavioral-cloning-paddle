@@ -91,3 +91,40 @@
     $ python drive.py [path to the pretrained model file]
     ```
 
+## 六、代码结构和详细信息
+* 代码结构
+
+  ```python
+  │  train.py # 训练脚本
+  │  drive.py # 测试脚本
+  │
+  ├─car
+  │      model.py # 模型代码
+  │      utils.py # 功能代码
+  │
+  ├─pretrained_models # 模型参数文件
+  │      model_keras.pdparams # 转换自参考项目的参数文件
+  │      model_paddle_test1.pdparams # 使用本项目训练的模型参数文件
+  │      model_paddle_test2.pdparams # 使用本项目训练的模型参数文件
+  ```
+* 参数说明：
+
+  |参数|默认值|说明|适用脚本|
+  |:-:|:-:|:-:|:-:|
+  |d|data|数据集目录|train|
+  |s|save|保存目录|train|
+  |t|0.2|测试集切分比例|train|
+  |k|0.5|dropout 概率|train|
+  |n|100|训练轮次|train|
+  |b|40|数据处理批大小|train|
+  |l|1.0e-4|学习率|train|
+  |e|False|是否提前终止|train|
+
+## 七、模型信息
+* 模型的总体信息如下：
+
+  |信息|说明|
+  |:-:|:-:|
+  |框架版本|Paddle 2.1.2|
+  |应用场景|自动驾驶|
+  |支持硬件|CPU / GPU|
