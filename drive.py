@@ -1,5 +1,4 @@
 import os
-import utils
 import base64
 import paddle
 import shutil
@@ -14,6 +13,7 @@ from io import BytesIO
 from flask import Flask
 from datetime import datetime
 from car.model import build_model
+from car.utils import preprocess
 
 sio = socketio.Server()
 app = Flask(__name__)
@@ -45,7 +45,7 @@ def telemetry(sid, data):
 
         try:
             image = np.asarray(image)  # from PIL image to numpy array
-            image = utils.preprocess(image)  # apply the preprocessing
+            image = preprocess(image)  # apply the preprocessing
             image = np.array([image])  # the model expects 4D array
 
             # predict the steering angle for the image
